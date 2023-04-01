@@ -13,7 +13,7 @@ public class DemoQaTest {
     private SelenideElement firstNameField = $("#firstName");
     private SelenideElement lastNameField = $(By.id("lastName"));
     private SelenideElement emailField = $(By.id("userEmail"));
-    private SelenideElement genderMaleRadio = $(By.id("gender-radio-1"));
+    private SelenideElement genderMaleRadio = $x("//label[text() = 'Male']");
     private SelenideElement phoneNumberField = $x("//input[@id = 'userNumber']");
 
     private SelenideElement birthDateField = $(By.id("dateOfBirthInput"));
@@ -23,8 +23,11 @@ public class DemoQaTest {
     private SelenideElement subject = $(By.id("subjectsInput"));
     private SelenideElement textArea = $x("//textarea");
     private SelenideElement state = $(By.id("state"));
-    private SelenideElement city = $(By.id("city"));
+    private SelenideElement cityButton = $(By.id("city"));
     private SelenideElement stateHarnaya = $(By.id("react-select-3-option-2"));
+    private SelenideElement hobbyCheckBox = $x("//label[text() = 'Sports']");
+    private SelenideElement city = $(By.id("react-select-4-option-1"));
+    private SelenideElement submitButton = $x("//button[@id =  'submit']");
 
     @BeforeEach
     public void setUp() {
@@ -39,7 +42,7 @@ public class DemoQaTest {
         firstNameField.setValue("Ivan");
         lastNameField.setValue("Ivanov");
         emailField.setValue("IvIvan@test.ru");
-        phoneNumberField.setValue("8-800-555-35-35");
+        phoneNumberField.setValue("88005553535");
         birthDateField.click();
         month.selectOption("September");
         year.selectOption("2005");
@@ -48,9 +51,11 @@ public class DemoQaTest {
         textArea.setValue("test address");
         state.click();
         stateHarnaya.click();
+        cityButton.click();
         city.click();
-        $(By.id("react-select-4-option-1")).click();
-//        genderMaleRadio.click();
+        hobbyCheckBox.click();
+        genderMaleRadio.click();
+        submitButton.click();
     }
 
 }
