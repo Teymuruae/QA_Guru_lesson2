@@ -1,9 +1,11 @@
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
+
+import java.io.File;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$x;
@@ -11,23 +13,27 @@ import static com.codeborne.selenide.Selenide.$x;
 public class DemoQaTest {
 
     private SelenideElement firstNameField = $("#firstName");
-    private SelenideElement lastNameField = $(By.id("lastName"));
-    private SelenideElement emailField = $(By.id("userEmail"));
-    private SelenideElement genderMaleRadio = $x("//label[text() = 'Male']");
-    private SelenideElement phoneNumberField = $x("//input[@id = 'userNumber']");
-
-    private SelenideElement birthDateField = $(By.id("dateOfBirthInput"));
-    private SelenideElement month = $x("//select[@class = 'react-datepicker__month-select']");
-    private SelenideElement year = $x("//select[@class = 'react-datepicker__year-select']");
+    private SelenideElement lastNameField = $("#lastName");
+    private SelenideElement emailField = $("#userEmail");
+    private SelenideElement genderMaleRadio = $("#gender-radio-1");
+    private SelenideElement phoneNumberField = $("#userNumber");
+    private SelenideElement birthDateField = $("#dateOfBirthInput");
+    private SelenideElement month = $(".react-datepicker__month-select");
+    private SelenideElement year = $(".react-datepicker__year-select");
     private SelenideElement day = $x("//div[@role = 'option' and text() = 20]");
-    private SelenideElement subject = $(By.id("subjectsInput"));
-    private SelenideElement textArea = $x("//textarea");
-    private SelenideElement state = $(By.id("state"));
-    private SelenideElement cityButton = $(By.id("city"));
-    private SelenideElement stateHarnaya = $(By.id("react-select-3-option-2"));
+    private SelenideElement subject = $("#subjectsInput");
+    private SelenideElement textArea = $("#currentAddress");
+    private SelenideElement state = $("#state");
+    private SelenideElement cityButton = $("#city");
+    private SelenideElement stateHarnaya = $("#react-select-3-option-2");
     private SelenideElement hobbyCheckBox = $x("//label[text() = 'Sports']");
-    private SelenideElement city = $(By.id("react-select-4-option-1"));
-    private SelenideElement submitButton = $x("//button[@id =  'submit']");
+    private SelenideElement city = $("#react-select-4-option-1");
+    private SelenideElement submitButton = $("#submit");
+    private SelenideElement uploadPictureButton = $("#uploadPicture");
+    private SelenideElement textToWaitForOnPage = $("h5");
+    private SelenideElement textToWaitForAfterSubmit = $(".modal-title");
+    private SelenideElement modalDialog = $(".modal-dialog.modal-lg");
+    private SelenideElement modalBody = $(".modal-body");
 
     @BeforeEach
     public void setUp() {
@@ -39,6 +45,7 @@ public class DemoQaTest {
 
     @Test
     public void fillFormTest() {
+       textToWaitForOnPage.shouldHave(Condition.text("Student Registration Form"));
         firstNameField.setValue("Ivan");
         lastNameField.setValue("Ivanov");
         emailField.setValue("IvIvan@test.ru");
@@ -54,8 +61,14 @@ public class DemoQaTest {
         cityButton.click();
         city.click();
         hobbyCheckBox.click();
-        genderMaleRadio.click();
+        genderMaleRadio.parent().click();
+        uploadPictureButton.uploadFile(new File("src/test/resources/img/test.png"));
         submitButton.click();
+
+        modalDialog.should(Condition.appear);
+        textToWaitForAfterSubmit.shouldHave(Condition.text("Thanks for submitting the form"));
+        modalBody.shouldHave(Condition.text("Ivan"), Condition.text("8800555353"), Condition.text("English"), Condition.text("test address"));
+
     }
 
 }
