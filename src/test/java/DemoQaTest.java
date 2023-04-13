@@ -1,7 +1,5 @@
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.Selenide;
-import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.*;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,7 +13,8 @@ public class DemoQaTest {
     private SelenideElement firstNameField = $("#firstName");
     private SelenideElement lastNameField = $("#lastName");
     private SelenideElement emailField = $("#userEmail");
-    private SelenideElement genderMaleRadio = $("#gender-radio-1");
+
+    private SelenideElement genderMaleRadio = $(Selectors.byTagAndText("label", "Male"));
     private SelenideElement phoneNumberField = $("#userNumber");
     private SelenideElement birthDateField = $("#dateOfBirthInput");
     private SelenideElement month = $(".react-datepicker__month-select");
@@ -25,9 +24,11 @@ public class DemoQaTest {
     private SelenideElement textArea = $("#currentAddress");
     private SelenideElement state = $("#state");
     private SelenideElement cityButton = $("#city");
-    private SelenideElement stateHarnaya = $("#react-select-3-option-2");
+//    private SelenideElement stateHarnaya = $("#react-select-3-option-2");
+    private SelenideElement stateHarnaya = $(Selectors.byTagAndText("div", "Haryana"));
     private SelenideElement hobbyCheckBox = $x("//label[text() = 'Sports']");
-    private SelenideElement city = $("#react-select-4-option-1");
+//    private SelenideElement city = $("#react-select-4-option-1");
+    private SelenideElement city = $(Selectors.byTagAndText("div", "Karnal"));
     private SelenideElement submitButton = $("#submit");
     private SelenideElement uploadPictureButton = $("#uploadPicture");
     private SelenideElement textToWaitForOnPage = $("h5");
@@ -67,8 +68,13 @@ public class DemoQaTest {
 
         modalDialog.should(Condition.appear);
         textToWaitForAfterSubmit.shouldHave(Condition.text("Thanks for submitting the form"));
-        modalBody.shouldHave(Condition.text("Ivan"), Condition.text("8800555353"), Condition.text("English"), Condition.text("test address"));
+        modalBody.shouldHave(Condition.text("Ivan"),Condition.text("Ivanov"),Condition.text("IvIvan@test.ru"),
+                Condition.text("8800555353"), Condition.text("September"), Condition.text("2005"),
+                 Condition.text("English"),Condition.text("Sports"), Condition.text("test.png"),
+                Condition.text("Haryana Karnal"), Condition.text("test address"));
 
     }
+
+
 
 }
